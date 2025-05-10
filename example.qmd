@@ -5,7 +5,7 @@ format: html
 editor: visual
 ---
 
-#Introduction
+# Introduction
 
 This is the first change to this qmd file.
 
@@ -15,3 +15,42 @@ update from the testbranch.
 
 update from the testbranch for case 6.
 
+# Data Visualisation
+
+
+```{r load-library}
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+
+library(tidyverse)
+library(knitr)
+library(ggplot2)
+```
+
+
+```{r load-data}
+#| label: tbl-preview-data 
+#| tbl-cap: "The Preview of The Job Vacancies Dataset"
+
+job_vacancies <- read_csv("data/job_vacancies_data.csv")
+```
+
+
+```{r}
+#| label: fig-trend-sector
+#| fig-cap: "Job Vacancies Trend by Sector"
+
+#Plot job vacancies trends by sector
+ggplot(job_vacancies, aes(x = TIME_PERIOD, y = OBS_VALUE, color = Sector_Desc, group = Sector_Desc)) +
+  geom_line() +
+  geom_point() +
+  labs(
+    x = "Time Period",
+    y = "Job Vacancies (Thousands)"
+  ) +
+  theme_minimal()  +
+  theme(
+    axis.text.x = element_text(angle = 90, hjust = 1)  # Makes the x-axis labels vertical
+)
+```
